@@ -21,6 +21,9 @@
     <ClCompile Include="Finite_Automata.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="lexeme.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Finite_Automata.h">

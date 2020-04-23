@@ -1,38 +1,18 @@
+#ifndef __LEXEME_H__
+#define __LEXEME_H__
 #include <string>
+#include <map>
+
 using namespace std;
 
-enum TOKEN_NAME {
-	INT,    CHAR,    BOOL,    FLOAT,
-	INTVAL, CHARVAL, BOOLVAL, FLOATVAL, //CHARVAL: "~"
-	IDENTIFIER,
-	
-	IF, ELSE, WHILE, FOR,
-	RETURN,
+//contains the type of tokens that lexical analyzer can return.
+using tokennum = int;
 
-	ARI_PLUS, ARI_MINUS,
-	ARI_MUL, ARI_DIV,
-
-	BIT_SHL, BIT_SHR,
-	BIT_AND, BIT_OR,
-	
-	ASSIGN,
-	
-	CMP_LT,  CMP_GT,
-	CMP_EQ,  CMP_NE,
-	CMP_LTE, CMP_GTE,
-	
-	SEMICOLON, //;
-	LBRACKET, RBRACKET, //{}
-	LPAREN, RPAREN, // ()
-	COMMA,
-	
-	TAB, LF, SPACE
-};
-
-class Lexeme {
+class TOKEN_NAME {
 private:
-	TOKEN_NAME token;
-	string     lexeme;
+	static std::map<int, string> tokens;
 public:
-
+	static string getString(int tokenNum);
 };
+
+#endif
