@@ -1,6 +1,7 @@
 #include "Finite_Automata.h"
 #include <fstream>
 #include <iostream>
+#include <cassert>
 
 Finite_Automata::Finite_Automata()
 {
@@ -47,12 +48,39 @@ void Finite_Automata::loadFromFile(string filename)
 		//Get edges
 		for (int i = 0; i < nodeCnt; i++) {
 			int edgeCnt;
-			char c;
+			string c;
 			int dest;
-			inf >> edgeCnt;
+			inf >> c >> edgeCnt;
 			for (int j = 0; j < edgeCnt; j++) {
 				inf >> c >> dest;
-				nodelist[i]->addEdge(c, nodelist[dest]);
+				if (c.length() == 2) {
+					if (c == "TB") {
+						nodelist[i]->addEdge('\t', nodelist[dest]);
+					}
+					if (c == "LF") {
+						nodelist[i]->addEdge('\n', nodelist[dest]);
+					}
+					if (c == "SP") {
+						nodelist[i]->addEdge(' ', nodelist[dest]);
+					}
+				}
+				else if (c.length() == 3) {
+					if (c[1] != '-') { std::cout << "file read failed:: at node " << dest << ":" << c
+						                         << "," << "NOT d-d format" << endl; return; }
+					else
+						if (c[0] > c[2]) { std::cout << "file read failed:: at node " << dest << ":" << c
+							                     << "," << c[0] <<"-" << c[1] << ":left one is bigger" << endl; return; }
+						else {
+							for (char k = c[0]; k <= c[2]; k++) {
+								nodelist[i]->addEdge(k, nodelist[dest]);
+							}
+						}
+				}
+				else {
+					if (c.length() != 1) { std::cout << "file read failed:: at node " << dest << ":" << c
+						                             << "incorrect edge format: length is " << c.length() << endl; return; }
+					nodelist[i]->addEdge(c[0], nodelist[dest]);
+				}
 			}
 		}
 		startPt = nodelist[0];

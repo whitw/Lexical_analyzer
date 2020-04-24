@@ -7,7 +7,11 @@ using namespace std;
 int main(int argc, char* argv[]) {
 	string line;
 	ifstream ifile;
-	Finite_Automata fi("int.dfa");
+	string dfaname;
+	ifile.open("whichDFA.txt");
+	ifile >> dfaname;
+	ifile.close();
+	Finite_Automata fi(dfaname);
 	Lexical_Analyzer lex(fi);
 	
 	if (argc == 1) {
