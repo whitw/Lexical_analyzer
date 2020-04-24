@@ -125,11 +125,17 @@
   <ItemGroup>
     <ClCompile Include="Finite_Automata.cpp" />
     <ClCompile Include="lexeme.cpp" />
+    <ClCompile Include="Lexical_Analyzer.cpp" />
+    <ClCompile Include="Node.cpp" />
+    <ClCompile Include="token.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Finite_Automata.h" />
     <ClInclude Include="lexeme.h" />
+    <ClInclude Include="Lexical_Analyzer.h" />
+    <ClInclude Include="token.h" />
+    <ClInclude Include="Node.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

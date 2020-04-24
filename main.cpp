@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include "Finite_Automata.h"
+#include "Lexical_Analyzer.h"
+#include "lexeme.h"
 using namespace std;
 
 int main(int argc, char* argv[]) {

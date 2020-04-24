@@ -21,12 +21,30 @@
     <ClCompile Include="Finite_Automata.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="token.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Lexical_Analyzer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="lexeme.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Finite_Automata.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="token.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Lexical_Analyzer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="lexeme.h">
