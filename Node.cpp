@@ -1,4 +1,5 @@
 #include "Node.h"
+#include <unordered_map>
 
 
 Node::Node(bool terminal, tokennum tok)
@@ -16,7 +17,8 @@ void Node::addEdge(char c, Node* ptr)
 Node* Node::next(char t)
 {
 	std::unordered_map<char, Node*>::iterator it = nextNode.find(t);
-	if (it == nextNode.end())
-		return nullptr;
-	else return it->second;
+	if (nextNode.count(t)) {
+		return it->second;
+	}
+	else return nullptr;
 }

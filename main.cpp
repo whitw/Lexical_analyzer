@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 	//TODO: Test Code here
-
+	fi.clearNodes();
 	ifile.close();
 	return 0;
 }

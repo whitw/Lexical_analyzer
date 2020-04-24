@@ -1,4 +1,4 @@
-#include "Lexeme.h"
+#include "lexeme.h"
 #include <iomanip>
 
 ostream& operator<<(ostream& out, const lexeme& lex)
