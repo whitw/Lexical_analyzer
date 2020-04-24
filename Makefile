@@ -1,17 +1,28 @@
-CXXFLAGS += -g -pg
-CXXFLAGS += -fsanitize=address,leak,undefined
 CXXFLAGS += -std=c++17
-BFLAGS += -v
+OBJFLAGS += -c
 
 .PHONY: all clean
 
 all: Lexical_Analyzer
 
-Lexical_Analyzer: main.cpp Finite_Automata.cpp token.cpp Lexical_Analyzer.cpp lexeme.cpp Node.cpp Finite_Automata.h lexeme.h Lexical_Analyzer.h Node.h token.h
+Lexical_Analyzer: main.o Finite_Automata.o token.o Lexical_Analyzer.o lexeme.o Node.o
 	${CXX} ${CXXFLAGS} -o $@ $^
+
+main.o: main.cpp
+	${CXX} ${OBJFLAGS} $^
+Finite_Automata.o: Finite_Automata.cpp
+	${CXX} ${OBJFLAGS} $^
+token.o: token.cpp
+	${CXX} ${OBJFLAGS} $^
+Lexical_Analyzer.o: Lexical_Analyzer.cpp
+	${CXX} ${OBJFLAGS} $^
+lexeme.o: lexeme.cpp
+	${CXX} ${OBJFLAGS} $^
+Node.o: Node.cpp
+	${CXX} ${OBJFLAGS} $^
 
 clean:
 	rm -rf Lexical_Analyzer
-
+	rm -rf *.o
 run:
 	./Lexical_Analyzer

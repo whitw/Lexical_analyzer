@@ -5,3 +5,4 @@ Build/
 Release/
 Debug/
 Lexical_Analyzer
+*.o
