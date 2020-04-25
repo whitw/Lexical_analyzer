@@ -30,7 +30,7 @@ void Lexical_Analyzer::readStr(string str)
 		assert(lastSuccess <= i);
 		if (i != str.end()) {
 			//check for cur->next(*i);
-			//i번째 문자열을 읽었을 때의 state가 testNode
+			//state after reading i characters == testNode
 			testNode = cur->next(*i);
 			if (testNode != nullptr) {
 				//not terminated yet. continue.

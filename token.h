@@ -13,6 +13,7 @@ class TOKEN_NAME {
 private:
 	static std::map<int, string> tokens;
 public:
+	static void readFromFile(string filename);
 	static string getString(const int tokenNum);
 };
 

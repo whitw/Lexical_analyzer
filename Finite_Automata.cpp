@@ -63,6 +63,9 @@ void Finite_Automata::loadFromFile(string filename)
 					if (c == "SP") {
 						nodelist[i]->addEdge(' ', nodelist[dest]);
 					}
+					if (c == "CR") {
+						nodelist[i]->addEdge('\r', nodelist[dest]);
+					}
 				}
 				else if (c.length() == 3) {
 					if (c[1] != '-') { std::cout << "file read failed:: at node " << dest << ":" << c
