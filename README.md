@@ -8,7 +8,7 @@ by editing ~.token, you can define token.</br>
 ### whichDFA.txt
 
 	<dfa file to use>
-	<nfa file to use>
+	<token file to use>
 
 ### .dfa files
 
