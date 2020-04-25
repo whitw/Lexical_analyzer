@@ -1,0 +1,5 @@
+&int char bool float 973 "string" true false 424.195 identifier
+if else while for return + - * / <<
+>> & | = < > == != <= >= ;
+{ } ( ) , 	 
+ 
