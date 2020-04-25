@@ -61,12 +61,13 @@ int main(int argc, char* argv[]) {
 		cout << "Cannot create the file" << ofname << endl;
 		return 0;
 	}
-	char input[1000];
+	char input[1024];
 	lexeme l;
 	while(!ifile.eof()){
-		ifile.getline(input, 1000);
-		lex.readStr(string(input) + "\n");
+		ifile.read(input, 1024);
+		lex.appendStr(string(input).substr(0, ifile.gcount()));
 	}
+	lex.readStr();
 	string lexStr;
 	while(!lex.isEnd()){
 		l =  lex.next();

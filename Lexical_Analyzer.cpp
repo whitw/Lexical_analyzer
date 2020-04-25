@@ -7,16 +7,22 @@ Lexical_Analyzer::Lexical_Analyzer(Finite_Automata& fa)
 {
 	start = fa.start();
 }
-
-void Lexical_Analyzer::readStr(string str)
+void Lexical_Analyzer::readStr(string input)
 {
+	str = input;
+	readStr();
+}
+void Lexical_Analyzer::appendStr(string input) {
+	str.append(input);
+}
+void Lexical_Analyzer::readStr() {
 	//read string and place all lexemes into this->lexQueue
 	string::iterator i = str.begin();
 	string::iterator readTill = str.begin();
 	Node* cur = start;
 	Node* testNode = start;
 	//scan substring[readTill, i)
-	
+
 	string::iterator lastSuccess = str.begin(); //str[readTill,lastSuccess] is one lexeme
 	Node* lastSuccessNode = nullptr;
 	//if scanning [readTill, i) failed,
@@ -37,7 +43,7 @@ void Lexical_Analyzer::readStr(string str)
 				if (testNode->isTerminal()) {
 					lastSuccess = i;
 					lastSuccessNode = testNode;
-				} 
+				}
 				i++;
 				cur = testNode;
 			}
@@ -94,7 +100,6 @@ void Lexical_Analyzer::readStr(string str)
 		}
 	}
 }
-
 lexeme Lexical_Analyzer::next()
 {
 	assert(!lexQueue.empty());

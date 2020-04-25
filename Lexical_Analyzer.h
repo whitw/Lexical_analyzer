@@ -18,9 +18,12 @@ class Lexical_Analyzer {
 private:
 	Node* start;
 	std::queue<lexeme> lexQueue;
+	string str;
 public:
 	Lexical_Analyzer(Finite_Automata& fi);
+	void readStr();
 	void readStr(string string);
+	void appendStr(string string);
 	lexeme next(); //get the lexeme from token Queue.
 	bool isEnd() { return lexQueue.empty(); }
 };

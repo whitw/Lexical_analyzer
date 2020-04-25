@@ -1,2 +1,2 @@
-simpleC.dfa
-simpleC.token
+dfa/simpleC.dfa
+dfa/simpleC.token
