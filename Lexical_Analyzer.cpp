@@ -16,7 +16,7 @@ void Lexical_Analyzer::readStr(string str)
 	Node* cur = start;
 	Node* testNode = start;
 	//scan substring[readTill, i)
-
+	
 	string::iterator lastSuccess = str.begin(); //str[readTill,lastSuccess] is one lexeme
 	Node* lastSuccessNode = nullptr;
 	//if scanning [readTill, i) failed,
@@ -60,6 +60,7 @@ void Lexical_Analyzer::readStr(string str)
 						lexQueue.push(lexeme(0, string(readTill, readTill + 1)));
 						lastSuccess = i = readTill = readTill + 1;
 					}
+					cur = start;
 				}
 			}
 		}
