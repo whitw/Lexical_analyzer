@@ -8,6 +8,11 @@ by editing ~.dfa, you can define dfa
 
 by editing ~.token, you can define token.
 
+### whichDFA.txt
+<dfa file to use>
+  
+<nfa file to use>
+
 ### .dfa files
 <# of nodes>
 
