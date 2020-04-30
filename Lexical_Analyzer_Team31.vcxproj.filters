@@ -18,36 +18,36 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Finite_Automata.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="token.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Node.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Lexical_Analyzer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="lexeme.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="finite_automata.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="lexical_analyzer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="node.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Finite_Automata.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Node.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="token.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Lexical_Analyzer.h">
+    <ClInclude Include="lexeme.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="lexeme.h">
+    <ClInclude Include="finite_automata.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="lexical_analyzer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="node.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
