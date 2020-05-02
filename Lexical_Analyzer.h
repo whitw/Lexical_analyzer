@@ -16,14 +16,14 @@ class Lexical_Analyzer {
 	}
 	*/
 private:
-	Node* start;
-	std::queue<lexeme> lexQueue;
-	string str;
+	Node* start; //start state of the dfa structure
+	std::queue<lexeme> lexQueue; //output lexemes
+	string str; //input string
 public:
 	Lexical_Analyzer(Finite_Automata& fi);
-	void readStr();
 	void readStr(string string);
 	void appendStr(string string);
+	void readStr(); //use after appendStr(someString);
 	lexeme next(); //get the lexeme from token Queue.
 	bool isEnd() { return lexQueue.empty(); }
 };

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-//Definition of Token types
+//Mapping from integer to token name.
 using tokennum = int;
 
 class TOKEN_NAME {

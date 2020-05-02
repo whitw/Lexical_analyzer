@@ -10,12 +10,17 @@ int main(int argc, char* argv[]) {
 	string ofname;
 	string dfaname;
 	string tokenname;
-	ifile.open("whichDFA.txt");
+	ifile.open("whichDFA.txt"); //contains a filename for dfa, and tokens.
 	ifile >> dfaname >> tokenname;
 	ifile.close();
-	TOKEN_NAME::readFromFile(tokenname);
-	Finite_Automata fi(dfaname);
-	Lexical_Analyzer lex(fi);
+	TOKEN_NAME::readFromFile(tokenname); //init token
+	Finite_Automata fi(dfaname); //init dfa
+	Lexical_Analyzer lex(fi); //init lex
+
+	//by arguments:
+	//	./Lexical_Analyzer  --> input:stdin, output:stdout
+	//	./Lexical_Analyzer file.xxx --> input:file.xxx, output:file.out
+	//	./Lexical_Analyzer file.xxx file2.yyy --> input:file.xxx output:file2.yyy
 	if (argc == 1) {
 		string input;
 		cout << "entering console mode: you can type any line you want to test." << endl;
@@ -61,6 +66,8 @@ int main(int argc, char* argv[]) {
 		cout << "Cannot create the file" << ofname << endl;
 		return 0;
 	}
+	//main algorithm of the program.
+	//read a file and send to the lexical analyzer
 	char input[1024];
 	lexeme l;
 	while(!ifile.eof()){
@@ -69,6 +76,7 @@ int main(int argc, char* argv[]) {
 	}
 	lex.readStr();
 	string lexStr;
+	//You can read lex with this format.
 	while(!lex.isEnd()){
 		l =  lex.next();
 		ofile << l.getTokenNum() << " ";
@@ -80,7 +88,6 @@ int main(int argc, char* argv[]) {
 	}
 	cout << "Complete" << endl;
 	
-	//TODO: Test Code here
 	fi.clearNodes();
 	ifile.close();
 	ofile.close();
