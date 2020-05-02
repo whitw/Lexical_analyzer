@@ -26,3 +26,9 @@ clean:
 	rm -rf *.o
 run:
 	./Lexical_Analyzer
+
+test:
+	for f in Testcase/*; do ./Lexical_Analyzer $$f; done
+
+testClean:
+	rm -rf Testcase/*.out
