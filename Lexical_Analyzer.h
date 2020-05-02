@@ -17,7 +17,7 @@ class Lexical_Analyzer {
 	*/
 private:
 	Node* start; //start state of the dfa structure
-	std::queue<lexeme> lexQueue; //output lexemes
+	std::deque<lexeme> lexQueue; //output lexemes
 	string str; //input string
 public:
 	Lexical_Analyzer(Finite_Automata& fi);

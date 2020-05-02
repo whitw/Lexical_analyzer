@@ -54,7 +54,7 @@ void Lexical_Analyzer::readStr() {
 		//cannot read anymore. string ended, or cannot proceed a cursor from graph anymore.
 		else if (curN->isTerminal()) {
 			//detected lexeme successfully.
-			lexQueue.push(lexeme(curN->getTokenNum(), string(readFrom, cur)));
+			lexQueue.push_back(lexeme(curN->getTokenNum(), string(readFrom, cur)));
 			lastSuccess = readFrom = cur;
 			curN = start;
 			lastSuccessN = nullptr;
@@ -65,7 +65,12 @@ void Lexical_Analyzer::readStr() {
 			if (readFrom == lastSuccess) {
 				//None of the prefixes of the string [lastSuccess, cur] were the lexeme. ["int], [@]
 				//detect a single character as an error, and continue.
-				lexQueue.push(lexeme(0, string(readFrom, readFrom + 1)));
+				if (!lexQueue.empty() && lexQueue.back().getTokenNum() == 0) {
+					lexeme lex = lexQueue.back();
+					lexQueue.pop_back();
+					lexQueue.push_back(lexeme(0, lex.getString() + string(readFrom, readFrom + 1)));
+				}
+				else lexQueue.push_back(lexeme(0, string(readFrom, readFrom + 1)));
 				lastSuccess = cur = readFrom = readFrom + 1;
 				curN = start;
 				lastSuccessN = nullptr;
@@ -73,7 +78,7 @@ void Lexical_Analyzer::readStr() {
 			else {
 				// Start -> ... -> TerminalState -> ... nonTerminalState(cur). [43.t]
 				// detect [Start ... LastTerminalState] an lexeme, and continue from the next character.
-				lexQueue.push(lexeme(lastSuccessN->getTokenNum(), string(readFrom, lastSuccess)));
+				lexQueue.push_back(lexeme(lastSuccessN->getTokenNum(), string(readFrom, lastSuccess)));
 				cur = readFrom = lastSuccess;
 				curN = start;
 				lastSuccessN = nullptr;
@@ -88,6 +93,6 @@ lexeme Lexical_Analyzer::next()
 {
 	assert(!lexQueue.empty());
 	lexeme ret = lexQueue.front();
-	lexQueue.pop();
+	lexQueue.pop_front();
 	return ret;
 }
