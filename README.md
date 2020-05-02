@@ -45,6 +45,6 @@ token files are only for printing names of token, on case that token number is g
 
 ---
 ## how to run
-./Lexical_Analyzer [option:<input_file_name>] [option:<output_file_name>]</br>
+./Lexical_Analyzer [option:<input_file_name> [option:<output_file_name>]]</br>
 you can try console mode without typing any arguments.
 
