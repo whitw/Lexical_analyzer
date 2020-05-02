@@ -80,11 +80,7 @@ int main(int argc, char* argv[]) {
 	while(!lex.isEnd()){
 		l =  lex.next();
 		ofile << l.getTokenNum() << " ";
-		lexStr = l.getString();
-		if(lexStr == "\n") ofile << "LF" << endl;
-		else if(lexStr == "	") ofile << "TB" << endl;
-		else if(lexStr == " ") ofile << "SP" << endl;
-		else ofile << lexStr << endl;
+		ofile << l.getString() << endl;
 	}
 	cout << "Complete" << endl;
 	

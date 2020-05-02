@@ -15,7 +15,7 @@ public:
 	lexeme(tokennum token, string str) { this->token = token; this->str = str; }
 	tokennum getTokenNum() const { return token; }
 	string   getTokenName() const { return TOKEN_NAME::getString(token); }
-	string   getString() const { return str; }
+	string   getString() const;
 	friend ostream& operator<<(ostream& out, const lexeme& lex);
 };
 #endif
