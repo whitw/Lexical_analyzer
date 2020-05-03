@@ -31,6 +31,7 @@ void Lexical_Analyzer::readStr() {
 
 	assert(curN != nullptr);              //failed to open dfa file. The program must have been terminated.
 	assert(start->isTerminal() == false); //All lexical analyzer MUST not accept an empty string; infinite loop can occur.
+	if (str.length() == 0) return;
 	while (true) {
 		assert(readFrom <= lastSuccess);
 		assert(lastSuccess <= cur);       //find token at [readFrom, cur].
@@ -47,7 +48,7 @@ void Lexical_Analyzer::readStr() {
 			cur++;
 			if (curN->isTerminal()) {
 				lastSuccessN = curN;
-				lastSuccess++;
+				lastSuccess = cur;
 			}
 			continue;
 		}
@@ -66,6 +67,7 @@ void Lexical_Analyzer::readStr() {
 				//None of the prefixes of the string [lastSuccess, cur] were the lexeme. ["int], [@]
 				//detect a single character as an error, and continue.
 				if (!lexQueue.empty() && lexQueue.back().getTokenNum() == 0) {
+					//merge lexeme with invalid tokens(== errors)
 					lexeme lex = lexQueue.back();
 					lexQueue.pop_back();
 					lexQueue.push_back(lexeme(0, lex.getString() + string(readFrom, readFrom + 1)));

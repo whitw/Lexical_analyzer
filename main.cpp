@@ -79,7 +79,7 @@ int main(int argc, char* argv[]) {
 	//You can read lex with this format.
 	while(!lex.isEnd()){
 		l =  lex.next();
-		ofile << l.getTokenNum() << " ";
+		ofile << TOKEN_NAME::getString(l.getTokenNum()) << " ";
 		ofile << l.getString() << endl;
 	}
 	cout << "Complete" << endl;
