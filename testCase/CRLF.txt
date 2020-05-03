@@ -1,0 +1,5 @@
+this file contains CR LF
+a
+s
+d
+f

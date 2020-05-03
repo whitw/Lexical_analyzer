@@ -1,0 +1,6 @@
+This file contains only LFs
+a
+s
+d
+f
+g
