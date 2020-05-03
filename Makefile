@@ -28,7 +28,7 @@ run:
 	./Lexical_Analyzer
 
 test:
-	for f in Testcase/*; do ./Lexical_Analyzer $$f; done
+	for f in Testcase/*; do echo $$f ; ./Lexical_Analyzer $$f; done
 
 testClean:
 	rm -rf Testcase/*.out
