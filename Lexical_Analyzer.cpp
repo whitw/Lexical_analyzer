@@ -18,6 +18,17 @@ void Lexical_Analyzer::appendStr(string input) {
 	str.append(input);
 }
 
+pair<int, int> calcLnCol(string::iterator readFrom, string::iterator strbegin, vector<string::iterator> lnStart) {
+	int line = 1, col = readFrom - strbegin + 1;
+	for (unsigned int i = 0; i < lnStart.size(); i++) {
+		if (readFrom < lnStart[i]) {
+			line = i;
+			col = readFrom - lnStart[i - 1] + 1;
+			break;
+		}
+	}
+	return make_pair(line, col);
+}
 void Lexical_Analyzer::readStr() {
 	vector<string::iterator> lnStart; //list of starting pointer(iterator) of the line.
 	string::iterator cur = str.begin(); //LA had read till cur.
@@ -28,17 +39,18 @@ void Lexical_Analyzer::readStr() {
 	
 	/*initiate lnStart*/
 	lnStart.push_back(str.begin());
-	for (string::iterator i = str.begin(); i != str.end() && i + 1 != str.end(); i++) {
+	for (string::iterator i = str.begin(); i != str.end(); i++) {
 		if (i != str.begin() && *(i - 1) == '\r' && *i == '\n') {
 			lnStart.push_back(i + 1);
 		} //Windows \r\n
 		else if (i != str.begin() && *(i - 1) != '\r' && *i == '\n') {
 			lnStart.push_back(i + 1);
 		} //Linux \n
-		else if (i != str.end() && *i == '\r' && *(i+1) != '\n') {
+		else if (i != str.begin() && *(i-1) == '\r' && *i != '\n') {
 			lnStart.push_back(i + 1);
 		} //Mac \r
 	}
+	lnStart.push_back(str.end());
 
 	bool strEnded, readableNext;
 
@@ -68,7 +80,7 @@ void Lexical_Analyzer::readStr() {
 		//cannot read anymore. string ended, or cannot proceed a cursor from graph anymore.
 		else if (curN->isTerminal()) {
 			//detected lexeme successfully.
-			lexQueue.push_back(lexeme(curN->getTokenNum(), string(readFrom, cur)));
+			lexQueue.push_back(lexeme(curN->getTokenNum(), string(readFrom, cur), calcLnCol(readFrom, str.begin(), lnStart)));
 			lastSuccess = readFrom = cur;
 			curN = start;
 			lastSuccessN = nullptr;
@@ -83,19 +95,12 @@ void Lexical_Analyzer::readStr() {
 					//merge continuous lexemes with invalid tokens(== errors)
 					lexeme lex = lexQueue.back();
 					lexQueue.pop_back();
-					lexQueue.push_back(lexeme(0, lex.getString() + string(readFrom, readFrom + 1)));
+					lexQueue.push_back(lexeme(0, lex.getString() + string(readFrom, readFrom + 1), calcLnCol(readFrom, str.begin(), lnStart)));
 				}
 				else {
-					int line = 1, col = readFrom - str.begin() + 1;
-					for (unsigned int i = 0; i < lnStart.size(); i++) {
-						if (readFrom < lnStart[i]) {
-							line = i;
-							col = readFrom - lnStart[i - 1] + 1;
-							break;
-						}
-					}
-					lexQueue.push_back(lexeme(0, string(readFrom, readFrom + 1)));
-					errQueue.push(make_pair(line, col));
+					pair<int, int> lnCol = calcLnCol(readFrom, str.begin(), lnStart);
+					lexQueue.push_back(lexeme(0, string(readFrom, readFrom + 1), lnCol));
+					errQueue.push(lnCol);
 				}
 				lastSuccess = cur = readFrom = readFrom + 1;
 				curN = start;
@@ -104,7 +109,7 @@ void Lexical_Analyzer::readStr() {
 			else {
 				// Start -> ... -> TerminalState -> ... nonTerminalState(cur). [43.t]
 				// detect [Start ... LastTerminalState] an lexeme, and continue from the next character.
-				lexQueue.push_back(lexeme(lastSuccessN->getTokenNum(), string(readFrom, lastSuccess)));
+				lexQueue.push_back(lexeme(lastSuccessN->getTokenNum(), string(readFrom, lastSuccess), calcLnCol(readFrom, str.begin(), lnStart)));
 				cur = readFrom = lastSuccess;
 				curN = start;
 				lastSuccessN = nullptr;

@@ -84,8 +84,7 @@ int main(int argc, char* argv[]) {
 	//You can read lex with this format.
 	while(!lex.isEnd()){
 		l =  lex.next();
-		ofile << TOKEN_NAME::getString(l.getTokenNum()) << " ";
-		ofile << l.getString() << endl;
+		ofile << l.getPos().first << " " << l.getPos().second << " " << l.getTokenNum() << " " << l.getString() << endl;
 		if (l.getTokenNum() == 0) {
 			pair<int, int> errPos = lex.nextErr();
 			cout << "error at " << errPos.first << ":" << errPos.second << ", (" << l.getString() << ")"<< endl;
