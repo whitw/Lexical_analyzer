@@ -2,7 +2,7 @@
 #define __FINITE_AUTOMATA_H__
 
 #include <queue>
-#include "Node.h"
+#include "node.h"
 #include "token.h"
 using namespace std;
 

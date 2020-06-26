@@ -1,4 +1,4 @@
-#include "Finite_Automata.h"
+#include "finite_automata.h"
 #include <fstream>
 #include <iostream>
 #include <cassert>

@@ -1,7 +1,9 @@
-#include "Lexical_Analyzer.h"
+#include "lexical_analyzer.h"
 #include <cassert>
+#include <vector>
 #include "lexeme.h"
-#include "Node.h"
+#include "node.h"
+using namespace std;
 
 Lexical_Analyzer::Lexical_Analyzer(Finite_Automata& fa)
 {
@@ -16,17 +18,28 @@ void Lexical_Analyzer::appendStr(string input) {
 	str.append(input);
 }
 
-bool readable(string str) {
-	return true;
-}
-
 void Lexical_Analyzer::readStr() {
+	vector<string::iterator> lnStart; //list of starting pointer(iterator) of the line.
 	string::iterator cur = str.begin(); //LA had read till cur.
 	string::iterator lastSuccess = str.begin();//last Success. for the string "43.t", lastSuccess is at str[1](detect INTVAL)
-	string::iterator readFrom = str.begin();//
+	string::iterator readFrom = str.begin();//processed [str.begin(), readFrom). Find lexeme at [readFrom, cur]
 	Node* curN = start;
 	Node* lastSuccessN = nullptr;
 	
+	/*initiate lnStart*/
+	lnStart.push_back(str.begin());
+	for (string::iterator i = str.begin(); i != str.end() && i + 1 != str.end(); i++) {
+		if (i != str.begin() && *(i - 1) == '\r' && *i == '\n') {
+			lnStart.push_back(i + 1);
+		} //Windows \r\n
+		else if (i != str.begin() && *(i - 1) != '\r' && *i == '\n') {
+			lnStart.push_back(i + 1);
+		} //Linux \n
+		else if (i != str.end() && *i == '\r' && *(i+1) != '\n') {
+			lnStart.push_back(i + 1);
+		} //Mac \r
+	}
+
 	bool strEnded, readableNext;
 
 	assert(curN != nullptr);              //failed to open dfa file. The program must have been terminated.
@@ -61,18 +74,29 @@ void Lexical_Analyzer::readStr() {
 			lastSuccessN = nullptr;
 		}
 		else {
-			//occurs when L={boooooooooooool} and S=booooooooooo
+			//occurs when L={boooooooooooool} and w=booooooooooo
 			//occurs when the input string is ["int], [@] or [43.t]  -->detect error!
 			if (readFrom == lastSuccess) {
 				//None of the prefixes of the string [lastSuccess, cur] were the lexeme. ["int], [@]
 				//detect a single character as an error, and continue.
 				if (!lexQueue.empty() && lexQueue.back().getTokenNum() == 0) {
-					//merge lexeme with invalid tokens(== errors)
+					//merge continuous lexemes with invalid tokens(== errors)
 					lexeme lex = lexQueue.back();
 					lexQueue.pop_back();
 					lexQueue.push_back(lexeme(0, lex.getString() + string(readFrom, readFrom + 1)));
 				}
-				else lexQueue.push_back(lexeme(0, string(readFrom, readFrom + 1)));
+				else {
+					int line = 1, col = readFrom - str.begin() + 1;
+					for (unsigned int i = 0; i < lnStart.size(); i++) {
+						if (readFrom < lnStart[i]) {
+							line = i;
+							col = readFrom - lnStart[i - 1] + 1;
+							break;
+						}
+					}
+					lexQueue.push_back(lexeme(0, string(readFrom, readFrom + 1)));
+					errQueue.push(make_pair(line, col));
+				}
 				lastSuccess = cur = readFrom = readFrom + 1;
 				curN = start;
 				lastSuccessN = nullptr;
@@ -97,4 +121,13 @@ lexeme Lexical_Analyzer::next()
 	lexeme ret = lexQueue.front();
 	lexQueue.pop_front();
 	return ret;
+}
+
+std::pair<int, int> Lexical_Analyzer::nextErr()
+{
+	assert(!errQueue.empty());
+	std::pair<int, int> ret = errQueue.front();
+	errQueue.pop();
+	return ret;
+
 }

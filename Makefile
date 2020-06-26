@@ -1,34 +1,34 @@
 CXXFLAGS += -std=c++17
-OBJFLAGS += -c
+OBJFLAGS += -c -W -Wall -O2
 
-.PHONY: all clean
+.PHONY: all test clean testClean run
 
-all: Lexical_Analyzer
+all: lexical_analyzer
 
-Lexical_Analyzer: main.o Finite_Automata.o token.o Lexical_Analyzer.o lexeme.o Node.o
+lexical_analyzer: main.o finite_automata.o token.o lexical_analyzer.o lexeme.o node.o
 	${CXX} ${CXXFLAGS} -o $@ $^
 
 main.o: main.cpp
 	${CXX} ${OBJFLAGS} $^
-Finite_Automata.o: Finite_Automata.cpp
+finite_automata.o: finite_automata.cpp
 	${CXX} ${OBJFLAGS} $^
 token.o: token.cpp
 	${CXX} ${OBJFLAGS} $^
-Lexical_Analyzer.o: Lexical_Analyzer.cpp
+lexical_analyzer.o: lexical_analyzer.cpp
 	${CXX} ${OBJFLAGS} $^
 lexeme.o: lexeme.cpp
 	${CXX} ${OBJFLAGS} $^
-Node.o: Node.cpp
+node.o: node.cpp
 	${CXX} ${OBJFLAGS} $^
 
 clean:
-	rm -rf Lexical_Analyzer
+	rm -rf lexical_analyzer
 	rm -rf *.o
 run:
-	./Lexical_Analyzer
+	./lexical_analyzer
 
-test:
-	for f in Testcase/*; do echo $$f ; ./Lexical_Analyzer $$f; done
+test: lexical_analyzer
+	for f in Testcase/*; do echo $$f ; ./lexical_analyzer $$f; done
 
 testClean:
 	rm -rf Testcase/*.out

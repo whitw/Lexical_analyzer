@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "Lexical_Analyzer.h"
+#include "lexical_analyzer.h"
 #include "lexeme.h"
 using namespace std;
 
@@ -29,7 +29,12 @@ int main(int argc, char* argv[]) {
 			getline(cin, input);
 			lex.readStr(input);
 			while (!lex.isEnd()) {
-				cout << lex.next();
+				lexeme l = lex.next();
+				cout << l;
+				if (l.getTokenNum() == 0) {
+					pair<int, int> errPos = lex.nextErr();
+					cout << "at " << errPos.first << ":" << errPos.second << endl;
+				}
 			}
 		}
 		return 0;
@@ -81,6 +86,10 @@ int main(int argc, char* argv[]) {
 		l =  lex.next();
 		ofile << TOKEN_NAME::getString(l.getTokenNum()) << " ";
 		ofile << l.getString() << endl;
+		if (l.getTokenNum() == 0) {
+			pair<int, int> errPos = lex.nextErr();
+			cout << "error at " << errPos.first << ":" << errPos.second << ", (" << l.getString() << ")"<< endl;
+		}
 	}
 	cout << "Complete" << endl;
 	
